@@ -1,0 +1,99 @@
+# 🤖 Polynomial Logistic Regression from Scratch with Regularization
+
+This project demonstrates how to implement **Polynomial Logistic Regression from scratch** using **NumPy** and **matplotlib**, with **L2 regularization** to reduce overfitting. It uses synthetically generated 2D binary classification data.
+
+---
+
+## 📌 Project Overview
+
+- Logistic Regression (binary classification)
+- Polynomial feature expansion up to 3rd degree
+- Gradient Descent optimization
+- L2 Regularization (Ridge)
+- Visualization of:
+  - Cost reduction over iterations
+  - Decision boundary (non-linear)
+- No external ML libraries (fully manual implementation)
+
+---
+
+## 🧪 Dataset
+
+Generated using `sklearn.datasets.make_classification`:
+
+- **Samples**: 200  
+- **Features**: 2  
+- **Classes**: 2  
+- **Noise**: 10% label flipping  
+- **Cluster separation**: 0.8
+
+---
+
+## 🧠 Polynomial Feature Engineering
+
+We manually construct polynomial features from the two normalized input features:
+
+- First-order: `x1, x2`  
+- Second-order: `x1², x2², x1 * x2`  
+- Third-order: `x1³, x2³`
+
+Final shape of training data: **(200, 7)**
+
+---
+
+## ⚙️ Model Training (Logistic Regression)
+
+### 🔸 Initialization
+
+- Parameters: `w` (weights), `b` (bias) initialized to 0
+- Learning rate: `alpha = 0.01`
+- Regularization strength: `λ = 0.01`
+- Iterations: `50000`
+
+### 🔸 Training Loop
+
+1. **Forward pass**: compute `z = X_poly @ w + b`
+2. Apply **sigmoid activation**:  
+   \[
+   y_{\text{pred}} = \frac{1}{1 + e^{-z}}
+   \]
+3. Compute **regularized binary cross-entropy loss**:
+   \[
+   J = - \frac{1}{m} \sum \left[ y \log(\hat{y}) + (1 - y) \log(1 - \hat{y}) \right] + \frac{\lambda}{2m} \sum w^2
+   \]
+4. Compute gradients with regularization
+5. Update `w` and `b` using gradient descent
+
+---
+
+## 📉 Cost Reduction Plot
+
+The cost consistently decreases over 50,000 iterations.  
+**Final cost**: `0.4878`, indicating good model fit.
+
+---
+
+## 🧩 Decision Boundary Visualization
+
+- We use a mesh grid over the feature space
+- Predict probabilities for each grid point using the trained model
+- Draw the boundary where predicted probability = 0.5
+
+- 🔵 Class 1 points  
+- 🔴 Class 0 points  
+- 🌊 **Cyan contour line**: predicted decision boundary
+
+---
+
+## 📊 Final Results
+
+| Component           | Value             |
+|---------------------|------------------|
+| Samples             | 200              |
+| Features (after poly) | 7               |
+| Final cost          | 0.4878           |
+| Regularization      | L2 (λ = 0.01)     |
+| Boundary            | Curved / Non-linear |
+
+--
+
